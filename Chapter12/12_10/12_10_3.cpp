@@ -1,8 +1,9 @@
-// Dynamic Casting (µ¿Àû Çüº¯È¯)
-// ´ÙÇü¼ºÀ» »ç¿ëÇÏ´Ù º¸¸é 
-// ÀÚ½Ä Å¬·¡½ºÀÇ Æ÷ÀÎÅÍ¸¦ ºÎ¸ğ Å¬·¡½ºÀÇ Æ÷ÀÎÅÍ·Î ¹Ù²ãÁá´Ù°¡
-// ´Ù½Ã ÀÚ½Ä Å¬·¡½ºÀÇ Æ÷ÀÎÅÍ·Î ¹Ù²ãÁà¾ß ÇÏ´Â °æ¿ì°¡ ÀÖ´Ù. 
-// ÀÌ °æ¿ì, µ¿Àû Çüº¯È¯À» »ç¿ëÇÑ´Ù. 
+// Dynamic Casting (ë™ì  í˜•ë³€í™˜)
+// ë‹¤í˜•ì„±ì„ ì‚¬ìš©í•˜ë‹¤ ë³´ë©´ 
+// ìì‹ í´ë˜ìŠ¤ì˜ í¬ì¸í„°ë¥¼ ë¶€ëª¨ í´ë˜ìŠ¤ì˜ í¬ì¸í„°ë¡œ ë°”ê¿”ì¤¬ë‹¤ê°€
+// ë‹¤ì‹œ ìì‹ í´ë˜ìŠ¤ì˜ í¬ì¸í„°ë¡œ ë°”ê¿”ì¤˜ì•¼ í•˜ëŠ” ê²½ìš°ê°€ ìˆë‹¤. 
+// ì´ ê²½ìš°, ë™ì  í˜•ë³€í™˜ì„ ì‚¬ìš©í•œë‹¤. 
+// ì‹¤ì œ ì½”ë“œ êµ¬í˜„ ì‹œ ë™ì  í˜•ë³€í™˜ ì‚¬ìš©í•˜ê¸° ë³´ë‹¤ëŠ” functionalì´ë‚˜ lambda functionì„ ì‚¬ìš©í•˜ëŠ” ê²ƒ ê¶Œì¥
 
 #include <iostream>
 #include <string>
@@ -45,28 +46,29 @@ int main()
 {
 	Derived1 d1;
 	d1.m_j = 2048;
-	Base* base = &d1; // baseÀÇ Æ÷ÀÎÅÍ¿¡ d1ÀÇ ÁÖ¼Ò¸¦ ³ÖÀ½
+	Base* base = &d1; // baseì˜ í¬ì¸í„°ì— d1ì˜ ì£¼ì†Œë¥¼ ë„£ìŒ
 
 	/*
-	// base¸¦ Base¿¡¼­ Derived1·Î µ¿Àû Çüº¯È¯
-	auto* base_to_d1 = static_cast<Derived1*>(base); // I'm derived Ãâ·Â
+	// baseë¥¼ Baseì—ì„œ Derived1ë¡œ ë™ì  í˜•ë³€í™˜
+	auto* base_to_d1 = static_cast<Derived1*>(base); // I'm derived ì¶œë ¥
 	if (base_to_d1 != nullptr)
 		base_to_d1->print();
 	else
 		cout << "Failed" << endl;
 	*/
 
-	// base¸¦ Base¿¡¼­ Derived2·Î µ¿Àû Çüº¯È¯
-	// dynamic cast¸¦ »ç¿ëÇÒ °æ¿ì derived1 -> base -> derived2 ºÒ°¡´É
-	// ¸Ş¸ğ¸®¿¡ ÀúÀåµÇ¾î ÀÖ´Â °Ç d1ÀÌ¹Ç·Î base·Î º¯È¯Çß´Ù ´Ù½Ã d1À¸·Î º¯È¯ÇÏ´Â °Ç ¹®Á¦°¡ ¾ø±â ¶§¹®
+	// baseë¥¼ Baseì—ì„œ Derived2ë¡œ ë™ì  í˜•ë³€í™˜
+	// dynamic castë¥¼ ì‚¬ìš©í•  ê²½ìš° derived1 -> base -> derived2 ë¶ˆê°€ëŠ¥
+	// ë©”ëª¨ë¦¬ì— ì €ì¥ë˜ì–´ ìˆëŠ” ê±´ d1ì´ë¯€ë¡œ baseë¡œ ë³€í™˜í–ˆë‹¤ ë‹¤ì‹œ d1ìœ¼ë¡œ ë³€í™˜í•˜ëŠ” ê±´ ë¬¸ì œê°€ ì—†ê¸° ë•Œë¬¸
 	
-	// static cast¸¦ »ç¿ëÇÒ °æ¿ì derived1 -> base -> derived2 °¡´É
-	// static cast´Â ·±Å¸ÀÓ¿¡¼­ ¿¡·¯ Ã¼Å©¸¦ ÇÏÁö ¾Ê±â ¶§¹®
-	// dynamic cast´Â ·±Å¸ÀÓ¿¡¼­ ¿¡·¯ Ã¼Å© ÇÔ
-	auto* base_to_d1 = static_cast<Derived2*>(base); // I'm derived Ãâ·Â
+	// static castë¥¼ ì‚¬ìš©í•  ê²½ìš° derived1 -> base -> derived2 ê°€ëŠ¥
+	// static castëŠ” ëŸ°íƒ€ì„ì—ì„œ ì—ëŸ¬ ì²´í¬ë¥¼ í•˜ì§€ ì•Šê¸° ë•Œë¬¸
+	// dynamic castëŠ” ëŸ°íƒ€ì„ì—ì„œ ì—ëŸ¬ ì²´í¬ í•¨
+	auto* base_to_d1 = static_cast<Derived2*>(base); // I'm derived ì¶œë ¥
 	if (base_to_d1 != nullptr)
 		base_to_d1->print();
 	else
 		cout << "Failed" << endl;
 	return 0;
+
 }
