@@ -60,7 +60,8 @@ int main()
 	// base를 Base에서 Derived2로 동적 형변환
 	// dynamic cast를 사용할 경우 derived1 -> base -> derived2 불가능
 	// 메모리에 저장되어 있는 건 d1이므로 base로 변환했다 다시 d1으로 변환하는 건 문제가 없기 때문
-	
+
+	// static cast는 할 수 있는 한 최대한 형변환 하려 함
 	// static cast를 사용할 경우 derived1 -> base -> derived2 가능
 	// static cast는 런타임에서 에러 체크를 하지 않기 때문
 	// dynamic cast는 런타임에서 에러 체크 함
@@ -72,3 +73,4 @@ int main()
 	return 0;
 
 }
+
