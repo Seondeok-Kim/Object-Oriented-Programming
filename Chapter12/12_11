@@ -1,0 +1,51 @@
+// 유도 클래스에서 출력 연산자 사용하기
+
+#include <iostream>
+
+class Base
+{
+public:
+	Base() {}
+
+	// freind는 클래스 멤버가 아니므로 직접 override할 수 없음
+	friend std::ostream& operator << (std::ostream& out, const Base& b)
+	{	
+		// print함수를 만들어서 얘한테 다 맡겨버림
+		return b.print(out);
+	}
+
+	// print를 virtual로 만들고 자식 클래스에서 override하게 함ㄱ
+	virtual std::ostream& print(std::ostream& out) const
+	{
+		out << "Base";
+		return out;
+	}
+};
+
+class Derived : public Base
+{
+public:
+	Derived() {}
+
+	// 자식 클래스에서 overrding
+	virtual std::ostream& print(std::ostream& out) const override
+	{
+		out << "Derived";
+		return out;
+	}
+};
+
+
+int main()
+{
+	Base b;
+	std::cout << b << std::endl;
+
+	Derived d;
+	std::cout << d << std::endl;
+
+	Base& bref = d;
+	std::cout << bref << std::endl;
+
+	return 0;
+}
