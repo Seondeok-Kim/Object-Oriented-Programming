@@ -1,0 +1,120 @@
+﻿// ¿¹¿Ü Ã³¸®¿Í ½ºÅÃ µÇ°¨±â(Stack Unwinding)
+#include <iostream>
+using namespace std;
+
+
+
+void last()
+{
+	cout << "Last " << endl;
+	cout << "Throws exception" << endl;
+
+	throw - 1;
+
+	cout << "End last" << endl;
+}
+
+
+void third()
+{
+	cout << "Third" << endl;
+	last();
+	cout << "End third" << endl;
+}
+
+
+void second()
+{
+	cout << "Second" << endl;
+	try
+	{
+		third();
+	}
+	catch (double)
+	{
+		cerr << "Second caught double exception" << endl;
+	}
+	cout << "End second" << endl;
+}
+
+
+void first()
+{
+
+	cout << "First" << endl;
+	try
+	{
+		second();
+	}
+	catch (double)
+	{
+		cerr << "first caught int exception" << endl;
+	}
+
+	cout << "End first " << endl;
+}
+
+/*
+Start 출력
+try 블록 내에서 first() 호출
+catch(int) pass
+
+Second 출력
+try 블록 내에서 third() 호출
+
+Third 출력
+try 블록 내에서 last() 호출
+last()에서 exception이 발생하므로 End third 실행x
+
+Last 출력
+Throws exception 출력
+throw -1 실행 -> int 타입 예외 발생
+이후 End last 실행x
+프로그램은 function call stack을 하나씩 종료하면서
+해당 exception을 잡을 수 있는 catch를 찾을 때까지 위로 올라감
+
+// Stack unwinding 시작
+last() 중단 후 third()로 되돌아감
+third() 내 try-catch가 없으니 exception을 못 잡음 -> third() 중단
+second() 내 try-catch는 double 타입만 있으므로 해당 catch는 무시됨 -> second() 중단
+first() 내 try-catch는 double 타입만 있으므로 해당 catch는 무시됨 -> second() 중단
+main()에서 try-catch는 int 타입이 있으므로 여기서 exception 해결
+main caught int exception 출력
+catch 블록 뒤 코드 계속 실행 -> End first 출력 후 종료
+
+
+[Stack] 
+last()
+third()
+second()
+first()
+main()
+
+*/
+
+
+
+int main()
+{
+	cout << "Start" << endl;
+
+	try
+	{
+		first();
+	}
+	catch (int)
+	{
+		cerr << "main caught int exception" << endl;
+	}
+	// uncaught exceptions
+
+	// catch (....) // catch-all handlers
+	//{
+	//    cerr << "main caught ellipses exception" << endl;
+	//}
+
+	cout << "End main" << endl;
+
+	return 0;
+}
+
