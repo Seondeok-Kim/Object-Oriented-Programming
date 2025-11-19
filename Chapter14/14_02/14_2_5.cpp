@@ -1,4 +1,4 @@
-﻿// ¿¹¿Ü Ã³¸®¿Í ½ºÅÃ µÇ°¨±â(Stack Unwinding)
+﻿// 예외 처리와 스택 되감기 (Stack Unwinding)
 #include <iostream>
 using namespace std;
 
@@ -122,4 +122,5 @@ int main()
 
 	return 0;
 }
+
 
