@@ -1,4 +1,4 @@
-// ©╧©э цЁ╦╝©м ╫╨ец ╣г╟╗╠Б(Stack Unwinding)
+// Л≤┬Л≥╦ Л╡≤К╕╛Л≥─ Л┼╓М┐² К░≤Й╟░Й╦╟ (Stack Unwinding)
 #include <iostream>
 using namespace std;
 
@@ -77,4 +77,5 @@ int main()
 	cout << "End main" << endl;
 
 	return 0;
+
 }
