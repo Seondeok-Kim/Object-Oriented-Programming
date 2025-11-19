@@ -1,4 +1,4 @@
-// 예외 처리와 스택 되감기 (Stack Unwinding)
+// ¿¹¿Ü Ã³¸®¿Í ½ºÅÃ µÇ°¨±â(Stack Unwinding)
 #include <iostream>
 using namespace std;
 
@@ -6,7 +6,7 @@ using namespace std;
 
 void last()
 {
-	cout << "last " << endl;
+	cout << "Last " << endl;
 	cout << "Throws exception" << endl;
 
 	throw - 1;
@@ -54,6 +54,46 @@ void first()
 	cout << "End first " << endl;
 }
 
+/*
+Start 출력
+try 블록 내에서 first() 호출
+catch(int) pass
+
+Second 출력
+try 블록 내에서 third() 호출
+
+Third 출력
+try 블록 내에서 last() 호출
+last()에서 exception이 발생하므로 End third 실행x
+
+Last 출력
+Throws exception 출력
+throw -1 실행 -> int 타입 예외 발생
+이후 End last 실행x
+프로그램은 function call stack을 하나씩 종료하면서
+해당 exception을 잡을 수 있는 catch를 찾을 때까지 위로 올라감
+
+// Stack unwinding 시작
+last() 중단 후 third()로 되돌아감
+third() 내 try-catch가 없으니 exception을 못 잡음 -> third() 중단
+second() 내 try-catch는 double 타입만 있으므로 해당 catch는 무시됨 -> second() 중단
+first() 내 try-catch는 int 타입이 있으므로 여기서 exception을 잡음
+이후 first caught in exception 출력
+
+exception이 처리 되었으니 더 이상 위로 전달되지 않음
+main()에서 catch 블록 뒤 코드 계속 실행 -> End first 출력 후 종료
+
+
+[Stack] 
+last()
+third()
+second()
+first()
+main()
+
+*/
+
+
 
 int main()
 {
@@ -77,5 +117,5 @@ int main()
 	cout << "End main" << endl;
 
 	return 0;
-
 }
+
